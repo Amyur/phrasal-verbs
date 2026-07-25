@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Phrasal Verbs — Amy</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: #0f0f1a;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 16px;
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+
+  /* —— Grid —— */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 600px;
+    width: 100%;
+  }
+
+  /* —— Card using checkbox hack (pure CSS, 0 JS) —— */
+  .card {
+    position: relative;
+  }
+
+  .card input[type="checkbox"] {
+    display: none;
+  }
+
+  .card label {
+    display: block;
+    cursor: pointer;
+    border-radius: 14px;
+    overflow: hidden;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .card-front, .card-back {
+    padding: 28px 18px;
+    text-align: center;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-front {
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
+    border: 1px solid #2a2a4a;
+    border-radius: 14px;
+  }
+  .card-front .verb {
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+  .card-front .tap-label {
+    font-size: 11px;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 12px;
+  }
+
+  .card-back {
+    background: linear-gradient(145deg, #fafafa, #f0f0f5);
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    display: none;
+  }
+  .card-back .meaning {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 2px;
+  }
+  .card-back .meaning-alt {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 10px;
+  }
+  .card-back .example {
+    font-size: 14px;
+    color: #555;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .card-back .example strong {
+    font-style: normal;
+    color: #16213e;
+  }
+
+  /* —— Checked state: hide front, show back —— */
+  .card input:checked ~ label .card-front {
+    display: none;
+  }
+  .card input:checked ~ label .card-back {
+    display: flex;
+  }
+
+  /* —— Responsive —— */
+  @media (max-width: 500px) {
+    .card-grid { grid-template-columns: 1fr; max-width: 340px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>📚 Phrasal Verbs</h1>
+<p class="subtitle">tap the card to see the answer</p>
+
+<div class="card-grid">
+
+  <!-- 1. Break into -->
+  <div class="card">
+    <input type="checkbox" id="card1">
+    <label for="card1">
+      <div class="card-front">
+        <div class="verb">break into</div>
+        <div class="tap-label">👆 tap to reveal</div>
+      </div>
+      <div class="card-back">
+        <div class="meaning">meterse a la fuerza</div>
+        <div class="meaning-alt">irrumpir / ingresar a un campo nuevo</div>
+        <div class="example">"The data engineer wants to <strong>break into</strong> AI agents."</div>
+      </div>
+    </label>
+  </div>
+
+  <!-- 2. Pull off -->
+  <div class="card">
+    <input type="checkbox" id="card2">
+    <label for="card2">
+      <div class="card-front">
+        <div class="verb">pull off</div>
+        <div class="tap-label">👆 tap to reveal</div>
+      </div>
+      <div class="card-back">
+        <div class="meaning">lograr algo difícil</div>
+        <div class="meaning-alt">salirse con la tuya</div>
+        <div class="example">"She <strong>pulled off</strong> the migration with zero downtime."</div>
+      </div>
+    </label>
+  </div>
+
+  <!-- 3. Carry out -->
+  <div class="card">
+    <input type="checkbox" id="card3">
+    <label for="card3">
+      <div class="card-front">
+        <div class="verb">carry out</div>
+        <div class="tap-label">👆 tap to reveal</div>
+      </div>
+      <div class="card-back">
+        <div class="meaning">llevar a cabo</div>
+        <div class="meaning-alt">ejecutar</div>
+        <div class="example">"We need to <strong>carry out</strong> the ETL process every hour."</div>
+      </div>
+    </label>
+  </div>
+
+  <!-- 4. Roll out -->
+  <div class="card">
+    <input type="checkbox" id="card4">
+    <label for="card4">
+      <div class="card-front">
+        <div class="verb">roll out</div>
+        <div class="tap-label">👆 tap to reveal</div>
+      </div>
+      <div class="card-back">
+        <div class="meaning">implementar</div>
+        <div class="meaning-alt">lanzar gradualmente</div>
+        <div class="example">"The team will <strong>roll out</strong> the new pipeline next week."</div>
+      </div>
+    </label>
+  </div>
+
+  <!-- 5. Set up -->
+  <div class="card">
+    <input type="checkbox" id="card5">
+    <label for="card5">
+      <div class="card-front">
+        <div class="verb">set up</div>
+        <div class="tap-label">👆 tap to reveal</div>
+      </div>
+      <div class="card-back">
+        <div class="meaning">configurar</div>
+        <div class="meaning-alt">establecer / montar</div>
+        <div class="example">"I need to <strong>set up</strong> a new ETL job for the banking data."</div>
+      </div>
+    </label>
+  </div>
+
+  <!-- 6. Follow up on -->
+  <div class="card">
+    <input type="checkbox" id="card6">
+    <label for="card6">
+      <div class="card-front">
+        <div class="verb">follow up on</div>
+        <div class="tap-label">👆 tap to reveal</div>
+      </div>
+      <div class="card-back">
+        <div class="meaning">dar seguimiento</div>
+        <div class="meaning-alt">hacer seguimiento a algo</div>
+        <div class="example">"I'll <strong>follow up on</strong> the client's feedback after the meeting."</div>
+      </div>
+    </label>
+  </div>
+
+  <!-- 7. Narrow down -->
+  <div class="card">
+    <input type="checkbox" id="card7">
+    <label for="card7">
+      <div class="card-front">
+        <div class="verb">narrow down</div>
+        <div class="tap-label">👆 tap to reveal</div>
+      </div>
+      <div class="card-back">
+        <div class="meaning">reducir opciones</div>
+        <div class="meaning-alt">acotar / limitar</div>
+        <div class="example">"We need to <strong>narrow down</strong> the key takeaways for the board."</div>
+      </div>
+    </label>
+  </div>
+
+  <!-- 8. Figure out -->
+  <div class="card">
+    <input type="checkbox" id="card8">
+    <label for="card8">
+      <div class="card-front">
+        <div class="verb">figure out</div>
+        <div class="tap-label">👆 tap to reveal</div>
+      </div>
+      <div class="card-back">
+        <div class="meaning">resolver / descubrir</div>
+        <div class="meaning-alt">entender cómo funciona algo</div>
+        <div class="example">"We need to <strong>figure out</strong> why the pipeline keeps failing."</div>
+      </div>
+    </label>
+  </div>
+
+  <!-- 9. Wing it -->
+  <div class="card">
+    <input type="checkbox" id="card9">
+    <label for="card9">
+      <div class="card-front">
+        <div class="verb">wing it</div>
+        <div class="tap-label">👆 tap to reveal</div>
+      </div>
+      <div class="card-back">
+        <div class="meaning">improvisar</div>
+        <div class="meaning-alt">hacer algo sin preparación</div>
+        <div class="example">"I didn't prepare slides, I'll just <strong>wing it</strong> in the meeting."</div>
+      </div>
+    </label>
+  </div>
+
+  <!-- 10. Take over -->
+    <div class="card">
+      <input type="checkbox" id="card10">
+      <label for="card10">
+        <div class="card-front">
+          <div class="verb">take over</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">asumir el control</div>
+          <div class="meaning-alt">hacerse cargo</div>
+          <div class="example">"I'll <strong>take over</strong> the AI agent rollout while you focus on ETL."</div>
+        </div>
+      </label>
+    </div>
+
+    <!-- 11. Look into -->
+    <div class="card">
+      <input type="checkbox" id="card11">
+      <label for="card11">
+        <div class="card-front">
+          <div class="verb">look into</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">investigar</div>
+          <div class="meaning-alt">averiguar / indagar</div>
+          <div class="example">"I need to <strong>look into</strong> why the query is running so slow."</div>
+        </div>
+      </label>
+    </div>
+
+    <!-- Spacer + reset note -->
+  <div style="grid-column: 1 / -1; text-align: center; color: #555; font-size: 12px; margin-top: 6px;">
+    tap again to hide the answer 👆
+  </div>
+
+</div>
+
+</body>
+</html>
