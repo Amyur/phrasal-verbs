@@ -24,27 +24,78 @@
   .subtitle {
     color: #888;
     font-size: 14px;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
   }
 
-  /* —— Grid —— */
+  /* —— Tab radio buttons (hidden) —— */
+  input.tab-radio { display: none; }
+
+  /* —— Tab bar —— */
+  .tab-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    max-width: 600px;
+    width: 100%;
+  }
+  .tab-bar label {
+    flex: 1;
+    padding: 10px 14px;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #1a1a2e;
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid #2a2a4a;
+    transition: all .2s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tab-bar label .count {
+    display: inline-block;
+    background: #2a2a4a;
+    color: #888;
+    border-radius: 50px;
+    padding: 1px 8px;
+    font-size: 11px;
+    margin-left: 6px;
+    transition: all .2s;
+  }
+  #tab-phrasal:checked ~ .tab-bar label[for="tab-phrasal"],
+  #tab-shopping:checked ~ .tab-bar label[for="tab-shopping"] {
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
+    color: #fff;
+    border-color: #4a6fa5;
+    box-shadow: 0 0 12px rgba(74,111,165,.25);
+  }
+  #tab-phrasal:checked ~ .tab-bar label[for="tab-phrasal"] .count,
+  #tab-shopping:checked ~ .tab-bar label[for="tab-shopping"] .count {
+    background: #2a3a5a;
+    color: #aac;
+  }
+
+  /* —— Tab content containers —— */
+  .tab-content {
+    display: none;
+    max-width: 600px;
+    width: 100%;
+  }
+  #tab-phrasal:checked ~ .tab-content.tab-phrasal { display: block; }
+  #tab-shopping:checked ~ .tab-content.tab-shopping { display: block; }
+
+  /* —— Card grid —— */
   .card-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-    max-width: 600px;
     width: 100%;
   }
 
   /* —— Card using checkbox hack (pure CSS, 0 JS) —— */
-  .card {
-    position: relative;
-  }
-
-  .card input[type="checkbox"] {
-    display: none;
-  }
-
+  .card { position: relative; }
+  .card input[type="checkbox"] { display: none; }
   .card label {
     display: block;
     cursor: pointer;
@@ -53,7 +104,6 @@
     user-select: none;
     -webkit-tap-highlight-color: transparent;
   }
-
   .card-front, .card-back {
     padding: 28px 18px;
     text-align: center;
@@ -63,7 +113,6 @@
     justify-content: center;
     align-items: center;
   }
-
   .card-front {
     background: linear-gradient(145deg, #1a1a2e, #16213e);
     border: 1px solid #2a2a4a;
@@ -112,12 +161,26 @@
   }
 
   /* —— Checked state: hide front, show back —— */
-  .card input:checked ~ label .card-front {
-    display: none;
+  .card input:checked ~ label .card-front { display: none; }
+  .card input:checked ~ label .card-back { display: flex; }
+
+  /* —— Shopping tab: green accent —— */
+  #tab-shopping:checked ~ .tab-content.tab-shopping .card-front {
+    background: linear-gradient(145deg, #1a2e1a, #163e16);
+    border-color: #2a4a2a;
   }
-  .card input:checked ~ label .card-back {
-    display: flex;
+  #tab-shopping:checked ~ .tab-content.tab-shopping .card-back .meaning { color: #1a3e1a; }
+  #tab-shopping:checked ~ .tab-content.tab-shopping .card-back .example strong { color: #1a3e1a; }
+
+  /* —— Tab icon in subtitle —— */
+  .tab-subtitle {
+    color: #555;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 4px;
   }
+  #tab-phrasal:checked ~ .tab-content.tab-phrasal .tab-subtitle,
+  #tab-shopping:checked ~ .tab-content.tab-shopping .tab-subtitle { display: block; }
 
   /* —— Responsive —— */
   @media (max-width: 500px) {
@@ -127,156 +190,168 @@
 </head>
 <body>
 
+<!-- Tab radio buttons -->
+<input type="radio" name="tab" id="tab-phrasal" class="tab-radio" checked>
+<input type="radio" name="tab" id="tab-shopping" class="tab-radio">
+
 <h1>📚 Phrasal Verbs</h1>
 <p class="subtitle">tap the card to see the answer</p>
 
-<div class="card-grid">
+<!-- Tab bar -->
+<div class="tab-bar">
+  <label for="tab-phrasal">📚 Phrasal Verbs <span class="count">11</span></label>
+  <label for="tab-shopping">🛒 De compras <span class="count">5</span></label>
+</div>
 
-  <!-- 1. Break into -->
-  <div class="card">
-    <input type="checkbox" id="card1">
-    <label for="card1">
-      <div class="card-front">
-        <div class="verb">break into</div>
-        <div class="tap-label">👆 tap to reveal</div>
-      </div>
-      <div class="card-back">
-        <div class="meaning">meterse a la fuerza</div>
-        <div class="meaning-alt">irrumpir / ingresar a un campo nuevo</div>
-        <div class="example">"The data engineer wants to <strong>break into</strong> AI agents."</div>
-      </div>
-    </label>
-  </div>
+<!-- ══════ TAB 1: Phrasal Verbs ══════ -->
+<div class="tab-content tab-phrasal">
+  <div class="card-grid">
 
-  <!-- 2. Pull off -->
-  <div class="card">
-    <input type="checkbox" id="card2">
-    <label for="card2">
-      <div class="card-front">
-        <div class="verb">pull off</div>
-        <div class="tap-label">👆 tap to reveal</div>
-      </div>
-      <div class="card-back">
-        <div class="meaning">lograr algo difícil</div>
-        <div class="meaning-alt">salirse con la tuya</div>
-        <div class="example">"She <strong>pulled off</strong> the migration with zero downtime."</div>
-      </div>
-    </label>
-  </div>
+    <!-- 1. Break into -->
+    <div class="card">
+      <input type="checkbox" id="card1">
+      <label for="card1">
+        <div class="card-front">
+          <div class="verb">break into</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">meterse a la fuerza</div>
+          <div class="meaning-alt">irrumpir / ingresar a un campo nuevo</div>
+          <div class="example">"The data engineer wants to <strong>break into</strong> AI agents."</div>
+        </div>
+      </label>
+    </div>
 
-  <!-- 3. Carry out -->
-  <div class="card">
-    <input type="checkbox" id="card3">
-    <label for="card3">
-      <div class="card-front">
-        <div class="verb">carry out</div>
-        <div class="tap-label">👆 tap to reveal</div>
-      </div>
-      <div class="card-back">
-        <div class="meaning">llevar a cabo</div>
-        <div class="meaning-alt">ejecutar</div>
-        <div class="example">"We need to <strong>carry out</strong> the ETL process every hour."</div>
-      </div>
-    </label>
-  </div>
+    <!-- 2. Pull off -->
+    <div class="card">
+      <input type="checkbox" id="card2">
+      <label for="card2">
+        <div class="card-front">
+          <div class="verb">pull off</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">lograr algo difícil</div>
+          <div class="meaning-alt">salirse con la tuya</div>
+          <div class="example">"She <strong>pulled off</strong> the migration with zero downtime."</div>
+        </div>
+      </label>
+    </div>
 
-  <!-- 4. Roll out -->
-  <div class="card">
-    <input type="checkbox" id="card4">
-    <label for="card4">
-      <div class="card-front">
-        <div class="verb">roll out</div>
-        <div class="tap-label">👆 tap to reveal</div>
-      </div>
-      <div class="card-back">
-        <div class="meaning">implementar</div>
-        <div class="meaning-alt">lanzar gradualmente</div>
-        <div class="example">"The team will <strong>roll out</strong> the new pipeline next week."</div>
-      </div>
-    </label>
-  </div>
+    <!-- 3. Carry out -->
+    <div class="card">
+      <input type="checkbox" id="card3">
+      <label for="card3">
+        <div class="card-front">
+          <div class="verb">carry out</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">llevar a cabo</div>
+          <div class="meaning-alt">ejecutar</div>
+          <div class="example">"We need to <strong>carry out</strong> the ETL process every hour."</div>
+        </div>
+      </label>
+    </div>
 
-  <!-- 5. Set up -->
-  <div class="card">
-    <input type="checkbox" id="card5">
-    <label for="card5">
-      <div class="card-front">
-        <div class="verb">set up</div>
-        <div class="tap-label">👆 tap to reveal</div>
-      </div>
-      <div class="card-back">
-        <div class="meaning">configurar</div>
-        <div class="meaning-alt">establecer / montar</div>
-        <div class="example">"I need to <strong>set up</strong> a new ETL job for the banking data."</div>
-      </div>
-    </label>
-  </div>
+    <!-- 4. Roll out -->
+    <div class="card">
+      <input type="checkbox" id="card4">
+      <label for="card4">
+        <div class="card-front">
+          <div class="verb">roll out</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">implementar</div>
+          <div class="meaning-alt">lanzar gradualmente</div>
+          <div class="example">"The team will <strong>roll out</strong> the new pipeline next week."</div>
+        </div>
+      </label>
+    </div>
 
-  <!-- 6. Follow up on -->
-  <div class="card">
-    <input type="checkbox" id="card6">
-    <label for="card6">
-      <div class="card-front">
-        <div class="verb">follow up on</div>
-        <div class="tap-label">👆 tap to reveal</div>
-      </div>
-      <div class="card-back">
-        <div class="meaning">dar seguimiento</div>
-        <div class="meaning-alt">hacer seguimiento a algo</div>
-        <div class="example">"I'll <strong>follow up on</strong> the client's feedback after the meeting."</div>
-      </div>
-    </label>
-  </div>
+    <!-- 5. Set up -->
+    <div class="card">
+      <input type="checkbox" id="card5">
+      <label for="card5">
+        <div class="card-front">
+          <div class="verb">set up</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">configurar</div>
+          <div class="meaning-alt">establecer / montar</div>
+          <div class="example">"I need to <strong>set up</strong> a new ETL job for the banking data."</div>
+        </div>
+      </label>
+    </div>
 
-  <!-- 7. Narrow down -->
-  <div class="card">
-    <input type="checkbox" id="card7">
-    <label for="card7">
-      <div class="card-front">
-        <div class="verb">narrow down</div>
-        <div class="tap-label">👆 tap to reveal</div>
-      </div>
-      <div class="card-back">
-        <div class="meaning">reducir opciones</div>
-        <div class="meaning-alt">acotar / limitar</div>
-        <div class="example">"We need to <strong>narrow down</strong> the key takeaways for the board."</div>
-      </div>
-    </label>
-  </div>
+    <!-- 6. Follow up on -->
+    <div class="card">
+      <input type="checkbox" id="card6">
+      <label for="card6">
+        <div class="card-front">
+          <div class="verb">follow up on</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">dar seguimiento</div>
+          <div class="meaning-alt">hacer seguimiento a algo</div>
+          <div class="example">"I'll <strong>follow up on</strong> the client's feedback after the meeting."</div>
+        </div>
+      </label>
+    </div>
 
-  <!-- 8. Figure out -->
-  <div class="card">
-    <input type="checkbox" id="card8">
-    <label for="card8">
-      <div class="card-front">
-        <div class="verb">figure out</div>
-        <div class="tap-label">👆 tap to reveal</div>
-      </div>
-      <div class="card-back">
-        <div class="meaning">resolver / descubrir</div>
-        <div class="meaning-alt">entender cómo funciona algo</div>
-        <div class="example">"We need to <strong>figure out</strong> why the pipeline keeps failing."</div>
-      </div>
-    </label>
-  </div>
+    <!-- 7. Narrow down -->
+    <div class="card">
+      <input type="checkbox" id="card7">
+      <label for="card7">
+        <div class="card-front">
+          <div class="verb">narrow down</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">reducir opciones</div>
+          <div class="meaning-alt">acotar / limitar</div>
+          <div class="example">"We need to <strong>narrow down</strong> the key takeaways for the board."</div>
+        </div>
+      </label>
+    </div>
 
-  <!-- 9. Wing it -->
-  <div class="card">
-    <input type="checkbox" id="card9">
-    <label for="card9">
-      <div class="card-front">
-        <div class="verb">wing it</div>
-        <div class="tap-label">👆 tap to reveal</div>
-      </div>
-      <div class="card-back">
-        <div class="meaning">improvisar</div>
-        <div class="meaning-alt">hacer algo sin preparación</div>
-        <div class="example">"I didn't prepare slides, I'll just <strong>wing it</strong> in the meeting."</div>
-      </div>
-    </label>
-  </div>
+    <!-- 8. Figure out -->
+    <div class="card">
+      <input type="checkbox" id="card8">
+      <label for="card8">
+        <div class="card-front">
+          <div class="verb">figure out</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">resolver / descubrir</div>
+          <div class="meaning-alt">entender cómo funciona algo</div>
+          <div class="example">"We need to <strong>figure out</strong> why the pipeline keeps failing."</div>
+        </div>
+      </label>
+    </div>
 
-  <!-- 10. Take over -->
+    <!-- 9. Wing it -->
+    <div class="card">
+      <input type="checkbox" id="card9">
+      <label for="card9">
+        <div class="card-front">
+          <div class="verb">wing it</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">improvisar</div>
+          <div class="meaning-alt">hacer algo sin preparación</div>
+          <div class="example">"I didn't prepare slides, I'll just <strong>wing it</strong> in the meeting."</div>
+        </div>
+      </label>
+    </div>
+
+    <!-- 10. Take over -->
     <div class="card">
       <input type="checkbox" id="card10">
       <label for="card10">
@@ -309,10 +384,105 @@
     </div>
 
     <!-- Spacer + reset note -->
-  <div style="grid-column: 1 / -1; text-align: center; color: #555; font-size: 12px; margin-top: 6px;">
-    tap again to hide the answer 👆
+    <div style="grid-column: 1 / -1; text-align: center; color: #555; font-size: 12px; margin-top: 6px;">
+      tap again to hide the answer 👆
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════ TAB 2: De compras ══════ -->
+<div class="tab-content tab-shopping">
+  <div class="card-grid">
+
+    <!-- 12. Pick up -->
+    <div class="card">
+      <input type="checkbox" id="card12">
+      <label for="card12">
+        <div class="card-front">
+          <div class="verb">pick up</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">comprar / recoger</div>
+          <div class="meaning-alt">pasar a buscar algo rápido</div>
+          <div class="example">"I need to <strong>pick up</strong> some milk on my way home."</div>
+        </div>
+      </label>
+    </div>
+
+    <!-- 13. Run out of -->
+    <div class="card">
+      <input type="checkbox" id="card13">
+      <label for="card13">
+        <div class="card-front">
+          <div class="verb">run out of</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">quedarse sin</div>
+          <div class="meaning-alt">agotarse / acabarse</div>
+          <div class="example">"We <strong>ran out of</strong> eggs, can you buy some?"</div>
+        </div>
+      </label>
+    </div>
+
+    <!-- 14. Stock up on -->
+    <div class="card">
+      <input type="checkbox" id="card14">
+      <label for="card14">
+        <div class="card-front">
+          <div class="verb">stock up on</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">abastecerse de</div>
+          <div class="meaning-alt">comprar en cantidad</div>
+          <div class="example">"Let's <strong>stock up on</strong> rice and pasta for the month."</div>
+        </div>
+      </label>
+    </div>
+
+    <!-- 15. Look for -->
+    <div class="card">
+      <input type="checkbox" id="card15">
+      <label for="card15">
+        <div class="card-front">
+          <div class="verb">look for</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">buscar</div>
+          <div class="meaning-alt">estar buscando algo</div>
+          <div class="example">"I'm <strong>looking for</strong> the olive oil aisle."</div>
+        </div>
+      </label>
+    </div>
+
+    <!-- 16. Check out -->
+    <div class="card">
+      <input type="checkbox" id="card16">
+      <label for="card16">
+        <div class="card-front">
+          <div class="verb">check out</div>
+          <div class="tap-label">👆 tap to reveal</div>
+        </div>
+        <div class="card-back">
+          <div class="meaning">pagar / pasar por caja</div>
+          <div class="meaning-alt">finalizar la compra</div>
+          <div class="example">"The line to <strong>check out</strong> was really long."</div>
+        </div>
+      </label>
+    </div>
+
+    <!-- Spacer + reset note -->
+    <div style="grid-column: 1 / -1; text-align: center; color: #555; font-size: 12px; margin-top: 6px;">
+      tap again to hide the answer 👆
+    </div>
+
   </div>
 
+  <p class="tab-subtitle">🛒 Vocabulario para ir al super</p>
 </div>
 
 </body>
